@@ -60,15 +60,20 @@ export function ProductAdder() {
 
     const toastId = toast.loading("Producto enviado a guardar");
 
-    const res = await createProductRequest(formDataToSend);
+    try {
+      const res = await createProductRequest(formDataToSend);
 
-    form.reset();
-    setFile(null);
-    setFiles(null);
+      form.reset();
+      setFile(null);
+      setFiles(null);
 
-    if (res.status == 200) {
-      toast.success("Producto guardado", { id: toastId });
-    } else {
+      if (res.status == 200) {
+        toast.success("Producto guardado", { id: toastId });
+      } else {
+        toast.error("Ocurrio un error", { id: toastId });
+      }
+    } catch (error) {
+      console.log(error);
       toast.error("Ocurrio un error", { id: toastId });
     }
   };
