@@ -62,10 +62,11 @@ export function ProductAdder() {
 
     const res = await createProductRequest(formDataToSend);
 
+    form.reset();
+    setFile(null);
+    setFiles(null);
+
     if (res.status == 200) {
-      form.reset();
-      setFile(null);
-      setFiles(null);
       toast.success("Producto guardado", { id: toastId });
     } else {
       toast.error("Ocurrio un error", { id: toastId });
