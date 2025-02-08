@@ -12,6 +12,41 @@ export function Navbar() {
             >
               Agregar producto
             </Link>
+            <span>|</span>
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-indigo-600 text-2xl"
+            >
+              Payments
+            </Link>
+            <span>|</span>
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-indigo-600 text-2xl"
+            >
+              Metrics
+            </Link>
+            <span>|</span>
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-indigo-600 text-2xl"
+            >
+              Chats
+            </Link>
+            <span>|</span>
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-indigo-600 text-2xl"
+            >
+              Users
+            </Link>
+            <span>|</span>
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-indigo-600 text-2xl"
+            >
+              Products
+            </Link>
           </div>
         </div>
       </div>
