@@ -7,22 +7,23 @@ import { useState } from "react";
 
 function ProductCard({ product }: { product: Product }) {
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<string>(`${product.image}`);
   return (
-    <div className="w-full flex flex-col p-2 bg-gray-100 dark:bg-gray-80 border-2 border-gray-400 dark:border-gray-5 gap-1 rounded-lg">
+    <div className="w-full flex flex-col group p-2 bg-white dark:bg-gray-80 border-2 border-gray-400 dark:border-gray-5 gap-1 rounded-lg shadow">
       <div className="flex">
         <div>
           <img
-            src={`${IMG_API_URL}${product.image}`}
+            src={`${IMG_API_URL}${currentImage}`}
             alt={product.title}
-            className="h-16 w-16 sm:h-20 sm:w-20 md:h-36 md:w-36 text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
+            className="h-16 w-16 sm:h-20 group-hover:h-64 group-hover:w-64  transition-[width,height]  sm:w-20 md:h-36 md:w-36 text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
           />
         </div>
         <div className="w-full ml-4 flex flex-row justify-between">
           <div className="flex flex-col-reverse justify-between items-start">
-            <p className="text-xl flex items-center dark:text-gray-5">
+            <p className="text-2xl flex items-center dark:text-gray-5">
               ${product.price}
             </p>
-            <p className="w-full text-lg md:text-2xl flex items-start dark:text-gray-5">
+            <p className="w-full text-lg md:text-3xl flex items-start dark:text-gray-5">
               {product.title}
             </p>
           </div>
@@ -65,7 +66,12 @@ function ProductCard({ product }: { product: Product }) {
           <img
             src={`${IMG_API_URL}${product.image}`}
             alt={product.title}
-            className="h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
+            onMouseEnter={() => setCurrentImage(`${product.image}`)}
+            className={`${
+              currentImage == `${product.image}`
+                ? "border-amber-200"
+                : "border-gray-400"
+            } h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5`}
           />
         </div>
         {product.gallery?.map((image) => {
@@ -74,7 +80,12 @@ function ProductCard({ product }: { product: Product }) {
               <img
                 src={`${IMG_API_URL}${image}`}
                 alt={product.title}
-                className="h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 border-gray-400 dark:text-gray-5"
+                onMouseEnter={() => setCurrentImage(`${image}`)}
+                className={`${
+                  currentImage == `${image}`
+                    ? "border-amber-300"
+                    : "border-gray-400"
+                } h-[70px] w-[70px] text-[8px] aspect-square object-cover rounded-md border-2 dark:text-gray-5`}
               />
             </div>
           );

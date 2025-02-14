@@ -9,5 +9,9 @@ export const getAllProductsRequest = async () => {
 };
 
 export const getUsersRequest = async () => {
-  return await axios.get(`/product`);
+  return await axios.get(`/users`);
+};
+
+export const getPaymentsRequest = async () => {
+  return await axios.get(`/paymentsall`);
 };
