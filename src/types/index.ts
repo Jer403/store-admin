@@ -5,3 +5,10 @@ export interface Product {
   image: File;
   gallery?: File[];
 }
+
+export interface UserInterface {
+  id: string;
+  username: string;
+  email: string;
+  created_at: string;
+}
