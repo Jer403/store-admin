@@ -4,18 +4,21 @@ import { createDateTextFromLanguage } from "../utils";
 
 function PaymentCard({ payment }: { payment: PaymentInterface }) {
   return (
-    <div className="w-full border-2 bg-white border-gray-400 rounded-lg p-3 flex flex-row justify-between gap-1 shadow">
-      <div className="flex flex-col justify-between text-2xl gap-1">
+    <div className="w-full border-2 bg-white border-gray-400 rounded-lg hover:shadow-lg hover:scale-[101%] transition-[scale,box-shadow] shadow-md p-3 flex flex-row justify-between gap-1 shadow">
+      <div className="flex flex-col justify-between items-start text-2xl gap-1">
         <p>
           ID: <span className="ml-2 font-semibold">{payment.id}</span>
+        </p>
+        <p className="flex justify-start">
+          UserID: <span className="ml-2 font-semibold">{payment.userId}</span>
         </p>
         <p className="flex justify-start">
           Price: $<span className="font-semibold">{payment.price}</span>
         </p>
       </div>
-      <div className="flex flex-col justify-end gap-1">
+      <div className="flex flex-col justify-between items-end gap-1">
         <div
-          className={`flex justify-center rounded-md ${
+          className={`flex justify-center rounded-md w-48 ${
             payment.state == "1"
               ? "bg-blue-400"
               : payment.state == "2"
@@ -31,7 +34,14 @@ function PaymentCard({ payment }: { payment: PaymentInterface }) {
               : "Failed"}
           </p>
         </div>
-        <p className=" text-2xl">{`${createDateTextFromLanguage(
+        {payment.bookingDate && (
+          <p className=" text-2xl">{`Creado el ${createDateTextFromLanguage(
+            "es",
+            new Date(payment.bookingDate)
+          )}`}</p>
+        )}
+
+        <p className=" text-2xl">{`Creado el ${createDateTextFromLanguage(
           "es",
           new Date(payment.created_at)
         )}`}</p>

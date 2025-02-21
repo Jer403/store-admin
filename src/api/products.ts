@@ -15,3 +15,11 @@ export const getUsersRequest = async () => {
 export const getPaymentsRequest = async () => {
   return await axios.get(`/paymentsall`);
 };
+
+export const getPurchasesRequest = async () => {
+  return await axios.post(`/purchases`);
+};
+
+export const deleteRequest = async (id: string) => {
+  return await axios.post(`/product/delete`, { id });
+};

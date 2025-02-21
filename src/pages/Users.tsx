@@ -7,7 +7,7 @@ function UserCard({ user }: { user: UserInterface }) {
   console.log();
 
   return (
-    <div className="w-full flex flex-col p-2 bg-white dark:bg-gray-80 border-2 border-gray-400 dark:border-gray-5 gap-1 rounded-lg">
+    <div className="w-full flex flex-col p-2 bg-white dark:bg-gray-80 border-2 shadow-md hover:shadow-lg hover:scale-[101%] transition-[scale,box-shadow] border-gray-400 dark:border-gray-5 gap-1 rounded-lg">
       <div className="flex">
         <div className="w-full mx-4 flex flex-row justify-between">
           <div className="flex flex-col justify-between items-start">
@@ -21,7 +21,7 @@ function UserCard({ user }: { user: UserInterface }) {
           </div>
           <div className="flex flex-col gap-3">
             <p className="w-full text-lg md:text-2xl flex justify-end dark:text-gray-5">
-              <span className="ml-4 text-xl">{user.id}</span>
+              <span className="ml-4 text-xl text-indigo-800">{user.id}</span>
             </p>
             <p className="w-full text-lg md:text-2xl flex justify-end  dark:text-gray-5">
               Creado el {createDateTextFromLanguage("es", date)}

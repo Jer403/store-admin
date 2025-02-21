@@ -14,7 +14,7 @@ export function AppRouter() {
   return (
     <Router>
       <Toaster richColors closeButton position="top-right"></Toaster>
-      <div className="min-h-screen w-full flex flex-col items-center">
+      <div className="min-h-[100vh-2rem] w-full flex flex-col items-center mt-8">
         <Navbar />
         <Suspense>
           <Routes>

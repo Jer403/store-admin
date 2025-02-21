@@ -1,4 +1,5 @@
 export interface Product {
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -19,4 +20,27 @@ export interface PaymentInterface {
   state: string;
   price: string;
   created_at: string;
+  bookingDate: string;
+  orderId: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  userId: string;
+  isMessageFromUser: string;
+  message: string;
+  created_at: string;
+}
+
+export interface ChatCard {
+  id: string;
+  userId: string;
+  seen: boolean;
+}
+
+export interface PurchasesInterface {
+  purchaseId: string;
+  userId: string;
+  productId: string;
+  purchased_at: string;
 }
