@@ -51,9 +51,10 @@ export function Metrics() {
   >([]);
 
   const getDateByFilter = () => {
+    const date = new Date();
+    const data = [] as string[];
+
     if (filter.type == "week") {
-      const date = new Date();
-      const data = [] as string[];
       for (let i = 0; i < 7; i++) {
         const dateActual = new Date(
           date.getFullYear(),
@@ -67,24 +68,19 @@ export function Metrics() {
       return data.reverse();
     }
     if (filter.type == "month") {
-      const date = new Date();
-      const data = [] as string[];
       for (let i = 1; i <= MonthsDays[date.getMonth()]; i++) {
         const dateActual = new Date(date.getFullYear(), date.getMonth(), i);
         data.push(
           `${MonthsShorted[dateActual.getMonth()]} ${dateActual.getDate()}`
         );
       }
-      return data;
     }
     if (filter.type == "year") {
-      const data = [] as string[];
       for (let i = 0; i < 12; i++) {
         data.push(`${MonthsShorted[i]}`);
       }
-      return data;
     }
-    return [];
+    return data;
   };
 
   const checkDateIsCorrect = (str: string, checkDate: Date) => {
@@ -105,11 +101,11 @@ export function Metrics() {
   };
 
   const calculateGainsData = useCallback(() => {
-    if (filter.type == "week") {
-      if (!payments) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
+    if (!payments) return [] as number[];
+    const date = new Date();
+    const data = [] as number[];
 
+    if (filter.type == "week") {
       for (let i = 0; i < 7; i++) {
         const dateActual = new Date(
           date.getFullYear(),
@@ -134,9 +130,6 @@ export function Metrics() {
       return data.reverse();
     }
     if (filter.type == "month") {
-      if (!payments) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
       for (let i = 1; i <= MonthsDays[date.getMonth()]; i++) {
         const dateActual = new Date(date.getFullYear(), date.getMonth(), i);
         const completedPayment = payments.filter(
@@ -154,12 +147,8 @@ export function Metrics() {
         );
         data.push(accum);
       }
-      return data;
     }
     if (filter.type == "year") {
-      if (!payments) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
       for (let i = 0; i < 12; i++) {
         const dateActual = new Date(date.getFullYear(), i);
         const completedPayment = payments.filter(
@@ -177,16 +166,16 @@ export function Metrics() {
         );
         data.push(accum);
       }
-      return data;
     }
-    return [];
+    return data;
   }, [filter.type, payments]);
 
   const calculateUsersData = useCallback(() => {
+    if (!users) return [] as number[];
+    const date = new Date();
+    const data = [] as number[];
+
     if (filter.type == "week") {
-      if (!users) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
       for (let i = 0; i < 7; i++) {
         const dateActual = new Date(
           date.getFullYear(),
@@ -203,9 +192,6 @@ export function Metrics() {
       return data.reverse();
     }
     if (filter.type == "month") {
-      if (!users) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
       for (let i = 1; i <= MonthsDays[date.getMonth()]; i++) {
         const dateActual = new Date(date.getFullYear(), date.getMonth(), i);
         const usersInDate = users.filter((user) =>
@@ -215,12 +201,8 @@ export function Metrics() {
         const accum = usersInDate.length;
         data.push(accum);
       }
-      return data;
     }
     if (filter.type == "year") {
-      if (!users) return [] as number[];
-      const date = new Date();
-      const data = [] as number[];
       for (let i = 0; i < 12; i++) {
         const dateActual = new Date(date.getFullYear(), i);
         const usersInDate = users.filter((user) =>
@@ -230,20 +212,17 @@ export function Metrics() {
         const accum = usersInDate.length;
         data.push(accum);
       }
-      return data;
     }
-    return [];
+    return data;
   }, [filter.type, users]);
 
   const calculateProductSelledData = useCallback(() => {
+    if (!purchases || !products)
+      return [] as { name: string; data: number[] }[];
+    const date = new Date();
+    const data = [] as { name: string; data: number[] }[];
+
     if (filter.type == "week") {
-      if (!purchases || !products)
-        return [] as { name: string; data: number[] }[];
-
-      const date = new Date();
-
-      const data = [] as { name: string; data: number[] }[];
-
       products.forEach((prod) => {
         const pdata = [] as number[];
         for (let i = 0; i < 7; i++) {
@@ -266,13 +245,6 @@ export function Metrics() {
       return data.reverse();
     }
     if (filter.type == "month") {
-      if (!purchases || !products)
-        return [] as { name: string; data: number[] }[];
-
-      const date = new Date();
-
-      const data = [] as { name: string; data: number[] }[];
-
       products.forEach((prod) => {
         const pdata = [] as number[];
         for (let i = 1; i <= MonthsDays[date.getMonth()]; i++) {
@@ -288,16 +260,8 @@ export function Metrics() {
         }
         data.push({ name: prod.title, data: pdata });
       });
-      return data;
     }
     if (filter.type == "year") {
-      if (!purchases || !products)
-        return [] as { name: string; data: number[] }[];
-
-      const date = new Date();
-
-      const data = [] as { name: string; data: number[] }[];
-
       products.forEach((prod) => {
         const pdata = [] as number[];
         for (let i = 0; i < 12; i++) {
@@ -313,9 +277,8 @@ export function Metrics() {
         }
         data.push({ name: prod.title, data: pdata });
       });
-      return data;
     }
-    return [];
+    return data;
   }, [filter.type, products, purchases]);
 
   const calculateAllProductSellsData = useCallback(() => {
@@ -365,12 +328,8 @@ export function Metrics() {
     setTotalProductSells(allP.data);
     setTotalProductSellsN(allP.prodNames);
     setTotalSells(calculateTotalSells());
-    // console.log(gains);
-    // console.log(usersCreated);
-    // console.log(productsSelled);
-    // console.log(datesByFilter);
     setTotalSellsToday(calculateTotalSellsToday());
-  }, [products, purchases, filter]);
+  }, [products, purchases, users, filter]);
 
   return (
     <>
