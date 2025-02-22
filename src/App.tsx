@@ -1,4 +1,5 @@
 import "./App.css";
+import { BeneficiaryProvider } from "./context/beneficiarys.context";
 import { ChatProvider } from "./context/chat.context";
 import { PaymentProvider } from "./context/payments.context";
 import { ProductProvider } from "./context/products.context";
@@ -10,15 +11,17 @@ function App() {
   return (
     <>
       <PurchasesProvider>
-        <ChatProvider>
-          <ProductProvider>
-            <UserProvider>
-              <PaymentProvider>
-                <AppRouter></AppRouter>
-              </PaymentProvider>
-            </UserProvider>
-          </ProductProvider>
-        </ChatProvider>
+        <BeneficiaryProvider>
+          <ChatProvider>
+            <ProductProvider>
+              <UserProvider>
+                <PaymentProvider>
+                  <AppRouter></AppRouter>
+                </PaymentProvider>
+              </UserProvider>
+            </ProductProvider>
+          </ChatProvider>
+        </BeneficiaryProvider>
       </PurchasesProvider>
     </>
   );

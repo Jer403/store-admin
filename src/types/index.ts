@@ -38,8 +38,27 @@ export interface ChatCard {
   seen: boolean;
 }
 
+export interface Beneficiary {
+  id: string;
+  name: string;
+  ratingBeforeMax: number;
+  ratingAfterMax: number;
+  max: number;
+  paid: number;
+  accumulation: number;
+  created_at: string;
+}
+
+export interface NewBeneficiary {
+  id: string;
+  name: string;
+  ratingBeforeMax: number;
+  ratingAfterMax: number;
+  max: number;
+}
+
 export interface PurchasesInterface {
-  purchaseId: string;
+  id: string;
   userId: string;
   productId: string;
   purchased_at: string;

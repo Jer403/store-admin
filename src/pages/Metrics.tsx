@@ -297,7 +297,7 @@ export function Metrics() {
       data.push(prodsFiltered.length);
       prods.push(prod.title);
     });
-    return { data: data.reverse(), prodNames: prods };
+    return { data: data.reverse(), prodNames: prods.reverse() };
   }, [filter.type, products, purchases]);
 
   const calculateTotalSells = useCallback(() => {

@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import { useUser } from "../hooks/useUser";
 import { UserInterface } from "../types";
 import { createDateTextFromLanguage } from "../utils";
@@ -35,16 +36,40 @@ function UserCard({ user }: { user: UserInterface }) {
 
 export function Users() {
   const { users, loadingUsers } = useUser();
+  const [filter, setFilter] = useState("");
+
+  const filterUsers = useCallback(() => {
+    if (filter == "") return users;
+    return users?.filter(
+      (u) =>
+        u.username.localeCompare(filter) != -1 ||
+        u.email.localeCompare(filter) != -1
+    );
+  }, [filter, users]);
+  const filteredUsers = filterUsers();
+
   return (
     <>
       <div className="w-full p-10  mt-3 max-w-[1330px] flex flex-col gap-4 items-center">
+        <div className="w-full bg-white rounded-lg shadow">
+          <input
+            type="text"
+            name="filter"
+            id="filter"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Buscar usuario"
+            className="w-full text-2xl rounded-lg h-14 p-4 focus:outline-indigo-500"
+          />
+        </div>
         {loadingUsers ? (
           <span className="text-2xl">Cargando usuarios...</span>
         ) : users && users.length > 0 ? (
           <>
-            {users.map((user) => {
-              return <UserCard user={user}></UserCard>;
-            })}
+            {filteredUsers &&
+              filteredUsers.map((user) => {
+                return <UserCard user={user}></UserCard>;
+              })}
           </>
         ) : (
           <span className="text-2xl">No se encontro ningun usuario</span>
