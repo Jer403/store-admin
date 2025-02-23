@@ -34,23 +34,15 @@ export const ChatContext = createContext<ChatContextType>({
   errorMessage: [] as LoadingMessage[],
   loadingUserChat: true,
   chat: [] as ChatMessage[],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addMessageToChat: (chatMesssage: ChatMessage) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addChatToUserChats: (chat: ChatCard) => {},
+  addMessageToChat: () => {},
+  addChatToUserChats: () => {},
   loadMessages: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setUserCardToNotSeen: (uuid: string) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setUserCardToSeen: (uuid: string) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addLoadingMessage: (message: LoadingMessage) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeLoadingMessage: (message: LoadingMessage) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addErrorMessage: (message: LoadingMessage) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeErrorMessage: (message: LoadingMessage) => {},
+  setUserCardToNotSeen: () => {},
+  setUserCardToSeen: () => {},
+  addLoadingMessage: () => {},
+  removeLoadingMessage: () => {},
+  addErrorMessage: () => {},
+  removeErrorMessage: () => {},
   userChat: [] as ChatCard[],
 });
 
@@ -119,6 +111,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
     try {
       const res = await getMessagesRequest();
       console.log("Response from messages: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setChat(res.data);
       } else {
@@ -136,6 +129,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
     try {
       const res = await getChatsRequest();
       console.log("Response from chats: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         const newChatsState = res.data.map((c: ChatCard) => {
           return { ...c, seen: JSON.parse(`${c.seen}`) };

@@ -63,3 +63,10 @@ export interface PurchasesInterface {
   productId: string;
   purchased_at: string;
 }
+
+export interface ProductInfo {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+}

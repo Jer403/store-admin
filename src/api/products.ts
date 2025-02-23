@@ -20,6 +20,16 @@ export const getPurchasesRequest = async () => {
   return await axios.post(`/purchases`);
 };
 
-export const deleteRequest = async (id: string) => {
-  return await axios.post(`/product/delete`, { id });
+export const editRequest = async ({
+  id,
+  title,
+  description,
+  price,
+}: {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+}) => {
+  return await axios.post(`/product/update`, { id, title, description, price });
 };

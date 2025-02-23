@@ -27,6 +27,7 @@ export function PurchasesProvider({ children }: PurchasesProviderProps) {
 
       const res = await getPurchasesRequest();
       console.log("Response from Purchasess: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setPurchases(res.data);
       } else {

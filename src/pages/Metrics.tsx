@@ -222,6 +222,8 @@ export function Metrics() {
     const date = new Date();
     const data = [] as { name: string; data: number[] }[];
 
+    console.log(purchases);
+
     if (filter.type == "week") {
       products.forEach((prod) => {
         const pdata = [] as number[];

@@ -37,6 +37,7 @@ export function BeneficiaryProvider({ children }: BeneficiaryProviderProps) {
 
       const res = await getAllBeneficiarysRequest();
       console.log("Response from Beneficiarys: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setBeneficiarys(res.data);
       } else {

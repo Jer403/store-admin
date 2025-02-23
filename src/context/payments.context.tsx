@@ -27,6 +27,7 @@ export function PaymentProvider({ children }: PaymentProviderProps) {
 
       const res = await getPaymentsRequest();
       console.log("Response from Payments: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setPayments(res.data);
       } else {

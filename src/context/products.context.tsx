@@ -3,8 +3,14 @@ import { getAllProductsRequest } from "../api/products";
 import { Product } from "../types";
 
 interface ProductContextType {
-  products: Product[] | null;
+  products: Product[];
   loadingProducts: boolean;
+  updateProduct: (prod: {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+  }) => void;
 }
 
 interface ProductProviderProps {
@@ -12,13 +18,33 @@ interface ProductProviderProps {
 }
 
 export const ProductContext = createContext<ProductContextType>({
-  products: null,
+  products: [],
   loadingProducts: true,
+  updateProduct: () => {},
 });
 
 export function ProductProvider({ children }: ProductProviderProps) {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+
+  const updateProduct = (product: {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+  }) => {
+    const UpdatedProduct = products.map((p) => {
+      if (p.id == product.id)
+        return {
+          ...p,
+          title: product.title,
+          description: product.description,
+          price: product.price,
+        };
+      return p;
+    });
+    setProducts(UpdatedProduct);
+  };
 
   const getProducts = async () => {
     setLoadingProducts(true);
@@ -27,6 +53,7 @@ export function ProductProvider({ children }: ProductProviderProps) {
 
       const res = await getAllProductsRequest();
       console.log("Response from products: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setProducts(res.data);
       } else {
@@ -44,7 +71,9 @@ export function ProductProvider({ children }: ProductProviderProps) {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, loadingProducts }}>
+    <ProductContext.Provider
+      value={{ products, loadingProducts, updateProduct }}
+    >
       {children}
     </ProductContext.Provider>
   );

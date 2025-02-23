@@ -27,6 +27,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
       const res = await getUsersRequest();
       console.log("Response from users: ", res);
+      if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         setUsers(res.data);
       } else {

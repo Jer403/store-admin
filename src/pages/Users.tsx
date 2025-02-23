@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
 import { UserInterface } from "../types";
 import { createDateTextFromLanguage } from "../utils";
+import { Search } from "lucide-react";
 
 function UserCard({ user }: { user: UserInterface }) {
   const date = new Date(user.created_at);
@@ -37,30 +38,49 @@ function UserCard({ user }: { user: UserInterface }) {
 export function Users() {
   const { users, loadingUsers } = useUser();
   const [filter, setFilter] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<UserInterface[] | null>(
+    []
+  );
 
   const filterUsers = useCallback(() => {
-    if (filter == "") return users;
-    return users?.filter(
+    if (filter == "" || !users) return users;
+    return users.filter(
       (u) =>
         u.username.localeCompare(filter) != -1 ||
         u.email.localeCompare(filter) != -1
     );
   }, [filter, users]);
-  const filteredUsers = filterUsers();
+
+  const search = useCallback(() => {
+    setFilteredUsers(filterUsers());
+  }, [filterUsers]);
+
+  useEffect(() => {
+    search();
+  }, []);
 
   return (
     <>
       <div className="w-full p-10  mt-3 max-w-[1330px] flex flex-col gap-4 items-center">
-        <div className="w-full bg-white rounded-lg shadow">
+        <div className="w-full bg-white rounded-lg shadow flex items-center">
           <input
             type="text"
             name="filter"
             id="filter"
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => {
+              setFilter(e.target.value);
+              if (e.target.value == "") search();
+            }}
             placeholder="Buscar usuario"
-            className="w-full text-2xl rounded-lg h-14 p-4 focus:outline-indigo-500"
+            className="w-full text-2xl rounded-l-lg h-14 p-4 focus:outline-indigo-500"
           />
+          <button
+            className="w-16 h-14 flex items-center justify-center hover:bg-indigo-100 group rounded-r-lg"
+            onClick={() => search()}
+          >
+            <Search className="w-8 h-8 group-hover:text-indigo-500"></Search>
+          </button>
         </div>
         {loadingUsers ? (
           <span className="text-2xl">Cargando usuarios...</span>
