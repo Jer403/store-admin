@@ -72,7 +72,7 @@ export function ProductInputImage({
         type="file"
         name={identifier}
         id={identifier}
-        accept=".jpg, .png"
+        accept=".png"
         onChange={handleFileChange}
         placeholder={placeholder}
         min={0}

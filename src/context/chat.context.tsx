@@ -129,6 +129,8 @@ export function ChatProvider({ children }: ChatProviderProps) {
     try {
       const res = await getChatsRequest();
       console.log("Response from chats: ", res);
+      console.log(res);
+
       if (res.data.error) throw new Error(res.data.error);
       if (res.status == 200) {
         const newChatsState = res.data.map((c: ChatCard) => {

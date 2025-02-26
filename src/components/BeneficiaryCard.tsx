@@ -13,7 +13,7 @@ import { MiniBadge } from "./MiniBadge";
 export function BeneficiaryCard({ beneficiary }: { beneficiary: Beneficiary }) {
   const date = new Date(beneficiary.created_at + " UTC");
   const maxPaidPercent =
-    ((beneficiary.paid + beneficiary.accumulation) / beneficiary.max) * 100;
+    Math.floor((beneficiary.paid / beneficiary.max) * 10000) / 100;
   const { removeBeneficiary, payBeneficiary } = useBeneficiary();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingPay, setLoadingPay] = useState(false);
