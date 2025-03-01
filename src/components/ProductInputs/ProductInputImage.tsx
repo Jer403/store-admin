@@ -4,12 +4,14 @@ export function ProductInputImage({
   identifier,
   name,
   placeholder,
+  required,
   file,
   setFile,
 }: {
   identifier: string;
   name: string;
   placeholder: string;
+  required: boolean;
   file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
 }) {
@@ -70,6 +72,7 @@ export function ProductInputImage({
         ref={inputFile}
         style={{ display: "none" }}
         type="file"
+        required={required}
         name={identifier}
         id={identifier}
         accept=".png"

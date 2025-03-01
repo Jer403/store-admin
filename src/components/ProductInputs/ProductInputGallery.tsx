@@ -4,12 +4,14 @@ export function ProductInputGallery({
   identifier,
   name,
   placeholder,
+  required,
   files,
   setFiles,
 }: {
   identifier: string;
   name: string;
   placeholder: string;
+  required: boolean;
   files: File[] | null;
   setFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
 }) {
@@ -62,6 +64,7 @@ export function ProductInputGallery({
         name={identifier}
         multiple={true}
         id={identifier}
+        required={required}
         accept=".jpg, .png"
         onChange={handleFileChange}
         placeholder={placeholder}

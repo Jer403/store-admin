@@ -5,34 +5,17 @@ import { ProductInputImage } from "../components/ProductInputs/ProductInputImage
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { createProductRequest } from "../api/products.ts";
-
-function validateData(formData: FormData) {
-  const errors = [];
-
-  const title = formData.get("title") as string;
-  const description = formData.get("description") as string;
-  const price = Number(formData.get("price"));
-  const image = formData.get("image") as File;
-
-  if (title.length == 0) {
-    errors.push("Pon un titulo al producto");
-  }
-  if (description.length == 0) {
-    errors.push("Pon una descripción al producto");
-  }
-  if (price == 0) {
-    errors.push("Pon un precio al producto");
-  }
-  if (image.name.length == 0) {
-    errors.push("Selecciona una imagen principal");
-  }
-  return errors;
-}
+import { ProductInputRar } from "../components/ProductInputs/ProductInputRar.tsx";
 
 export function ProductAdder() {
   const [errors, setErrors] = useState<string[] | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [files, setFiles] = useState<File[] | null>(null);
+  const [rar, setRar] = useState<File | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [price, setPrice] = useState<string | null>(null);
+  const [loadingFile, setLoadingFile] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,12 +34,6 @@ export function ProductAdder() {
     gallery.forEach((item) => {
       formDataToSend.append("gallery", item);
     });
-
-    const errors = validateData(formDataToSend);
-    if (errors.length > 0) {
-      setErrors(errors);
-      return;
-    }
 
     const toastId = toast.loading("Producto enviado a guardar");
 
@@ -106,24 +83,34 @@ export function ProductAdder() {
           onSubmit={handleSubmit}
         >
           <ProductInput
+            value={name}
+            setValue={setName}
+            required
             name="Titulo"
             identifier="title"
             type="text"
             placeholder="Titulo del producto"
-          ></ProductInput>
+          />
           <ProductInput
+            value={description}
+            setValue={setDescription}
+            required
             name="Descripción"
             identifier="description"
             type="textarea"
             placeholder="Descripcion del producto"
           ></ProductInput>
           <ProductInput
+            value={price}
+            setValue={setPrice}
+            required
             name="Precio"
             identifier="price"
             type="number"
             placeholder="Precio del producto"
           ></ProductInput>
           <ProductInputImage
+            required
             file={file}
             setFile={setFile}
             name="Imagen Principal"
@@ -131,14 +118,26 @@ export function ProductAdder() {
             placeholder="Imagen principal del producto"
           ></ProductInputImage>
           <ProductInputGallery
+            required
             files={files}
             setFiles={setFiles}
             name="Galeria"
             identifier="gallery"
             placeholder="Selecciona las imagenes de galeria del producto"
           ></ProductInputGallery>
+          <ProductInputRar
+            required
+            loadingFile={loadingFile}
+            setLoadingFile={setLoadingFile}
+            file={rar}
+            setFile={setRar}
+            name="Archivo Rar"
+            identifier="rar"
+            placeholder="Archivo rar del producto"
+          ></ProductInputRar>
           <button
             type="submit"
+            disabled={loadingFile}
             className="px-4 py-2 w-44 h-14 flex flex-row items-center justify-center gap-2 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Guardar
