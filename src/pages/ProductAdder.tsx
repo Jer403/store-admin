@@ -125,7 +125,7 @@ export function ProductAdder() {
             identifier="gallery"
             placeholder="Selecciona las imagenes de galeria del producto"
           ></ProductInputGallery>
-          <ProductInputRar
+          {/* <ProductInputRar
             required
             loadingFile={loadingFile}
             setLoadingFile={setLoadingFile}
@@ -134,7 +134,7 @@ export function ProductAdder() {
             name="Archivo Rar"
             identifier="rar"
             placeholder="Archivo rar del producto"
-          ></ProductInputRar>
+          ></ProductInputRar> */}
           <button
             type="submit"
             disabled={loadingFile}

@@ -129,18 +129,18 @@ export function Products() {
         ) : (
           <span className="text-2xl">No se encontraron productos</span>
         )}
-        <EditProductDialog
-          productInfo={{
-            id: currentId,
-            title: currentTitle,
-            description: currentDesc,
-            price: currentPrice,
-          }}
-          isOpen={isDialogOpen}
-          setIsOpen={setIsDialogOpen}
-          updateProduct={updateProduct}
-        ></EditProductDialog>
       </div>
+      <EditProductDialog
+        productInfo={{
+          id: currentId,
+          title: currentTitle,
+          description: currentDesc,
+          price: currentPrice,
+        }}
+        isOpen={isDialogOpen}
+        setIsOpen={setIsDialogOpen}
+        updateProduct={updateProduct}
+      ></EditProductDialog>
     </>
   );
 }

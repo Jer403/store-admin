@@ -60,7 +60,7 @@ export function EditProductDialog({
   return (
     <div
       className={`${
-        isOpen ? "absolute" : "hidden"
+        isOpen ? "fixed" : "hidden"
       } w-screen h-screen top-0 left-0 bg-[#0202025d]`}
       onMouseDown={() => setIsOpen(false)}
     >
@@ -120,7 +120,7 @@ export function EditProductDialog({
               {loadingSubmit ? (
                 <CircleDashed className="h-5 w-5 loader"></CircleDashed>
               ) : (
-                <span>Crearte Beneficiary</span>
+                <span>Editar Producto</span>
               )}
             </button>
           </form>
